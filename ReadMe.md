@@ -273,35 +273,8 @@ Possible future enhancements include:
 Data Analyst | Data Science | Financial Analytics
 
 LinkedIn:
-(Add your LinkedIn URL)
+https://www.linkedin.com/in/sneha-arun-945a08218/
 
 GitHub:
-(Add your GitHub URL)
+https://github.com/SnehaSathyavati?tab=repositories
 
----
-
-# 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-## ⭐ If you found this project useful, consider giving it a star!
-
-# 📷 Dashboard Preview
-
-## Main Dashboard
-
-![Dashboard](images/dashboard.png)
-
-## Portfolio Allocation & Strategy Ranking
-
-![Portfolio Allocation](images/allocation.png)
-
-## Analyst Sentiment
-
-![Analyst Sentiment](images/sentiment.png)
-
-## Portfolio Value Waterfall
-
-![Waterfall](images/waterfall.png)
