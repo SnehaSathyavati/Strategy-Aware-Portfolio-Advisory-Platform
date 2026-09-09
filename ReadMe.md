@@ -133,6 +133,14 @@ Portfolio Allocation
 Interactive Dashboard
 ```
 
+The data pipeline (download → sentiment → feature engineering → scoring) is implemented as a standalone, reusable module in `src/pipeline.py`. It can be run independently of the dashboard:
+
+```bash
+python src/pipeline.py
+```
+
+This regenerates `Data/latest_stock_features.csv`, which the Streamlit app then reads from — keeping data processing and the UI cleanly separated.
+
 ---
 
 # 🛠 Technology Stack
@@ -143,7 +151,7 @@ Interactive Dashboard
 | Data Processing | Pandas, NumPy |
 | Visualization | Plotly, Matplotlib |
 | Machine Learning | Scikit-learn |
-| Financial Data | yFinance |
+| Financial Data | yFinance, Finnhub |
 | Dashboard | Streamlit |
 | Development | Jupyter Notebook, VS Code |
 
@@ -155,27 +163,29 @@ Interactive Dashboard
 strategy-aware-portfolio-advisory-platform/
 
 │
-├── data/
+├── Data/
 │   ├── latest_stock_features.csv
 │   ├── sentiment_data.csv
 │   └── stock_prices.csv
 │
-├── notebooks/
+├── Notebooks/
 │   └── Strategy_Aware_Portfolio_Advisory_Platform.ipynb
 │
-├── outputs/
+├── Outputs/
 │   ├── recommended_portfolio.csv
 │   ├── performance_metrics.csv
 │   ├── portfolio_summary.csv
 │   └── portfolio_vs_benchmark.png
 │
 ├── src/
-│   └── app.py
+│   ├── app.py         # Streamlit dashboard
+│   └── pipeline.py    # Data download, feature engineering, and scoring
 │
-├── images/
+├── Images/
 │
+├── .env                # Local only — holds your API key, not committed
 ├── requirements.txt
-├── README.md
+├── ReadMe.md
 └── LICENSE
 ```
 
@@ -186,7 +196,7 @@ strategy-aware-portfolio-advisory-platform/
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/strategy-aware-portfolio-advisory-platform.git
+git clone https://github.com/SnehaSathyavati/Strategy-Aware-Portfolio-Advisory-Platform.git
 ```
 
 ---
@@ -194,7 +204,7 @@ git clone https://github.com/YOUR_USERNAME/strategy-aware-portfolio-advisory-pla
 ## 2. Navigate to the project
 
 ```bash
-cd strategy-aware-portfolio-advisory-platform
+cd Strategy-Aware-Portfolio-Advisory-Platform
 ```
 
 ---
@@ -207,7 +217,29 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Launch the application
+## 4. Set up environment variables
+
+This project uses the [Finnhub API](https://finnhub.io/) for analyst sentiment data. Create a free account to get an API key, then create a `.env` file in the project root:
+
+```
+FINNHUB_API_KEY=your_key_here
+```
+
+`.env` is excluded from version control via `.gitignore` — never commit your key.
+
+---
+
+## 5. Run the data pipeline
+
+```bash
+python src/pipeline.py
+```
+
+This downloads the latest price and sentiment data, computes features and strategy scores, and saves the result to `Data/latest_stock_features.csv`.
+
+---
+
+## 6. Launch the dashboard
 
 ```bash
 streamlit run src/app.py
@@ -217,16 +249,13 @@ streamlit run src/app.py
 
 # 📷 Dashboard Preview
 
-Add screenshots here after uploading them.
+![Dashboard](Images/dashboard.png)
 
-Example:
+![Portfolio Allocation](Images/allocation.png)
 
-```
-images/dashboard.png
-images/scenario_planner.png
-images/portfolio_allocation.png
-images/waterfall_chart.png
-```
+![Analyst Sentiment](Images/sentiment.png)
+
+![Portfolio Value Waterfall](Images/waterfall.png)
 
 ---
 
@@ -247,6 +276,7 @@ The application provides:
 
 - Uses historical market data and analyst sentiment for analysis.
 - Recommendations are based on heuristic scoring models rather than predictive machine learning.
+- Strategy weights are currently set heuristically; a weight-sensitivity comparison is planned to validate their stability.
 - The waterfall chart is illustrative and does not represent actual future investment performance.
 - The project currently evaluates a selected universe of stocks.
 
@@ -260,7 +290,7 @@ Possible future enhancements include:
 - Additional investment strategies
 - ETF and mutual fund support
 - Portfolio optimization using advanced optimization techniques
-- Backtesting framework
+- Weight sensitivity / backtesting framework to validate scoring assumptions
 - Risk-adjusted performance metrics
 - Cloud deployment
 
@@ -277,4 +307,3 @@ https://www.linkedin.com/in/sneha-arun-945a08218/
 
 GitHub:
 https://github.com/SnehaSathyavati?tab=repositories
-
